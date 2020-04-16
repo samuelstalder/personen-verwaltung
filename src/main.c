@@ -19,7 +19,8 @@
 #include "person.h"
 #include "list.h"
 
-
+#define INPUT_LENGTH 25
+#define INPUT_AGE_LENGTH 3
 
 void end();
 int is_correct_input(char name[30], char first_name[30], char age_as_chars[3]);
@@ -61,9 +62,9 @@ int main(int argc, char* argv[])
 
 	show_list(ancher);
 
-	char input_name[25];
-	char input_first_name[25];
-	char input_age_as_chars[3];
+	char input_name[INPUT_LENGTH];
+	char input_first_name[INPUT_LENGTH];
+	char input_age_as_chars[INPUT_AGE_LENGTH];
 	//int input_age;
 	person_t temp_person;
 	while (is_running == 1) {
