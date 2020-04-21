@@ -79,12 +79,31 @@ static void test_person_compare(void)
 	// END-STUDENTS-TO-ADD-CODE
 }
 
+static void test_same_person_compare(void)
+{
+	person_t p1;
+	strcpy(p1.name, "Stalder");
+	strcpy(p1.first_name, "Samuel");
+	p1.age = 21;
+
+	person_t p2;
+	strcpy(p2.name, "Stalder");
+	strcpy(p2.first_name, "Samuel");
+	p2.age = 21;
+	
+	int res = person_compare(&p1, &p2);
+	printf("test_same_person_compare %d\n", res);
+
+	CU_ASSERT_TRUE(res == 0);
+}
+
 static void test_list_insert(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
 	node_t *ancher = NULL;
 	ancher = (node_t *) malloc(sizeof(node_t));
+	if (ancher == NULL) { exit(EXIT_FAILURE); }
 
 	person_t p1;
 	strcpy(p1.name, "Stalder");
@@ -103,12 +122,57 @@ static void test_list_insert(void)
 	// END-STUDENTS-TO-ADD-CODE
 }
 
+static void test_list_insert_same_person(void)
+{
+	node_t *ancher = NULL;
+	ancher = (node_t *) malloc(sizeof(node_t));
+	if (ancher == NULL) { exit(EXIT_FAILURE); }
+
+	person_t p1;
+	strncpy(p1.name, "Stalder", NAME_LEN);
+	strncpy(p1.first_name, "Samuel", NAME_LEN);
+	p1.age = 21;
+	list_insert(ancher, p1);
+
+	person_t p2;
+	strncpy(p2.name, "Stalder", NAME_LEN);
+	strncpy(p2.first_name, "Samuel", NAME_LEN);
+	p2.age = 21;
+	list_insert(ancher, p2);
+
+	CU_ASSERT_EQUAL(ancher->next->next, NULL);
+}
+
 static void test_list_remove(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
 	node_t *ancher = NULL;
 	ancher = (node_t *) malloc(sizeof(node_t));
+	if (ancher == NULL) { exit(EXIT_FAILURE); }
+
+	person_t p1;
+	strncpy(p1.name, "Stalder", NAME_LEN);
+	strncpy(p1.first_name, "Samuel", NAME_LEN);
+	p1.age = 21;
+	list_insert(ancher, p1);
+
+	list_remove(ancher, p1);
+
+	// act
+	//CU_FAIL("missing test");
+	
+	// assert
+	CU_ASSERT_EQUAL(ancher->next, NULL);
+	
+	// END-STUDENTS-TO-ADD-CODE
+}
+
+static void test_list_remove_nonexisting_person(void) 
+{
+	node_t *ancher = NULL;
+	ancher = (node_t *) malloc(sizeof(node_t));
+	if (ancher == NULL) { exit(EXIT_FAILURE); }
 
 	person_t p1;
 	strcpy(p1.name, "Stalder");
@@ -122,16 +186,7 @@ static void test_list_remove(void)
 	p2.age = 24;
 	list_insert(ancher, p2);
 
-
-	list_remove(ancher, p2);
-
-	// act
-	//CU_FAIL("missing test");
-	
-	// assert
-	CU_ASSERT_EQUAL(ancher->next->next, NULL);
-	
-	// END-STUDENTS-TO-ADD-CODE
+	CU_ASSERT_EQUAL(ancher->next->next->next, NULL);
 }
 
 static void test_list_clear(void)
@@ -140,6 +195,7 @@ static void test_list_clear(void)
 	// arrange
 	node_t *ancher = NULL;
 	ancher = (node_t *) malloc(sizeof(node_t));
+	if (ancher == NULL) { exit(EXIT_FAILURE); }
 
 	person_t p1;
 	strcpy(p1.name, "Stalder");
@@ -173,8 +229,11 @@ int main(void)
     // setup, run, teardown
     TestMainBasic("lab test", setup, teardown
                   , test_person_compare
+				  , test_same_person_compare
                   , test_list_insert
+				  , test_list_insert_same_person
                   , test_list_remove
+				  , test_list_remove_nonexisting_person
                   , test_list_clear
                   );
 }

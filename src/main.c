@@ -39,28 +39,7 @@ int main(int argc, char* argv[])
 
 	node_t *ancher = NULL;
 	ancher = (node_t *) malloc(sizeof(node_t));
-	
-
-	person_t p1;
-	strcpy(p1.name, "Stalder");
-	strcpy(p1.first_name, "Samuel");
-	p1.age = 21;
-
-	person_t p2;
-	strcpy(p2.name, "Stalder");
-	strcpy(p2.first_name, "Elias");
-	p2.age = 24;
-
-	person_t p3;
-	strcpy(p3.name, "Stalder");
-	strcpy(p3.first_name, "Jeremia");
-	p3.age = 28;
-
-	list_insert(ancher, p1);
-	list_insert(ancher, p2);
-	list_insert(ancher, p3);
-
-	show_list(ancher);
+	if (ancher == NULL) { return EXIT_FAILURE; }
 
 	char input_name[INPUT_LENGTH];
 	char input_first_name[INPUT_LENGTH];
@@ -75,10 +54,8 @@ int main(int argc, char* argv[])
 				printf("Enter (name) (first name) (age): ");		
 				scanf("%s %s %s", input_name, input_first_name, input_age_as_chars);
 				if(is_correct_input(input_name, input_first_name, input_age_as_chars) == 1) {
-					//input_age = atoi(input_age_as_chars);
-					strcpy(temp_person.name, input_name);
-					strcpy(temp_person.first_name, input_first_name);
-					//temp_person.age = input_age;
+					strncpy(temp_person.name, input_name, NAME_LEN);
+					strncpy(temp_person.first_name, input_first_name, NAME_LEN);
 					temp_person.age = atoi(input_age_as_chars);
 					list_insert(ancher, temp_person);
 					printf("Typed: %s %s %d\n", temp_person.name, temp_person.first_name, temp_person.age);
@@ -88,10 +65,8 @@ int main(int argc, char* argv[])
 				printf("Enter (name) (first name) (age): ");		
 				scanf("%s %s %s", input_name, input_first_name, input_age_as_chars);
 				if(is_correct_input(input_name, input_first_name, input_age_as_chars) == 1) {
-					//input_age = atoi(input_age_as_chars);
-					strcpy(temp_person.name, input_name);
-					strcpy(temp_person.first_name, input_first_name);
-					//temp_person.age = input_age;
+					strncpy(temp_person.name, input_name, NAME_LEN);
+					strncpy(temp_person.first_name, input_first_name, NAME_LEN);
 					temp_person.age = atoi(input_age_as_chars);
 					list_remove(ancher, temp_person);
 					printf("Typed: %s %s %d\n", temp_person.name, temp_person.first_name, temp_person.age);
@@ -138,7 +113,6 @@ int is_correct_input(char name[25], char first_name[25], char age_as_chars[3]) {
 		is_correct = 0;
 	}
 
-	//1: true
 	//0: false
 	return is_correct;
 }
