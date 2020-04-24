@@ -32,7 +32,7 @@ void list_insert(node_t *ancher, person_t new_person) {
 			printf("This person already exists\n");
 			return;
 		}
-		if(person_compare(&a, &new_person) < 0) {
+		if(person_compare(&a, &new_person) > 0) {
 			//zwischen previous und current
 			node_t *temp_node = previous_node->next;
 			previous_node->next = (node_t *) malloc(sizeof(node_t));
@@ -61,11 +61,11 @@ void list_remove(node_t *ancher, person_t pers) {
 	while (current_node->next != NULL) {
 		c = current_node->content;
 		if(person_compare(&c, &pers) == 0) {
-		//if(strcmp(p.name,c.name) == 0 && strcmp(p.first_name, c.first_name) == 0 && p.age == c.age) {
+		//if(strcmp(pers.name,c.name) == 0 && strcmp(pers.first_name, c.first_name) == 0 && pers.age == c.age) {
 			//zwischen previous und current
 			previous_node->next = current_node->next;
-			free(&current_node->next);
-			//current_node->next = NULL;
+			free(current_node->next);
+			current_node->next = NULL;
 			break;
 		} else {
 			previous_node = current_node;
